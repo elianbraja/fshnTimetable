@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "fshnTimetable",
+    "slug": "fshnTimetable",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "fshnTimetable"
+}
