@@ -3,15 +3,24 @@ import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, Dimensions, InteractionManager, Button } from 'react-native';
 import DaySelector from '../components/DaySelector'
 import SingleDayTimetable from '../components/SingleDayTimetable'
+import DateSettings from '../services/DateSettings'
 
 export default class Timetable extends React.Component {
   constructor(props) {
     super(props)
     this.scrollView = React.createRef();
     this.screenWidth = Dimensions.get('window').width
+    this.ds = new DateSettings(new Date())
     this.state = {
-      day_index: 3
+      day_index: null,
+      monday_date: this.ds.getMondayDate()
     };
+  }
+
+  componentDidMount = () => {
+    this.setState({
+      day_index: [0,6].includes(this.ds.getDayIndex()) ? 1 : this.ds.getDayIndex(),
+    })
   }
 
   scrollToInitialPosition = (index, animated) => {
@@ -48,9 +57,11 @@ export default class Timetable extends React.Component {
           onLayout={() => this.scrollToInitialPosition(this.state.day_index, false)}
         >
         {[1,2,3,4,5].map((index) => {
+          const next_day = new Date(this.state.monday_date)
+          next_day.setDate(next_day.getDate() + index-1)
           return (
           <View style={{width: this.screenWidth, justifyContent: "center",alignItems: "center"}}>
-            <SingleDayTimetable key={index} date={new Date()} day_index={index}/>
+            <SingleDayTimetable key={index} date={next_day} day_index={index}/>
           </View>
         )})}
 
