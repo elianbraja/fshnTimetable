@@ -16,6 +16,7 @@ target 'fshnTimetable' do
     :hermes_enabled => podfile_properties['expo.jsEngine'] == 'hermes'
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   # Uncomment to opt-in to using Flipper
   #
   # if !ENV['CI']

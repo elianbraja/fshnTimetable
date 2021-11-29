@@ -333,6 +333,8 @@ PODS:
   - RNScreens (3.8.0):
     - React-Core
     - React-RCTImage
+  - RNVectorIcons (9.0.0):
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -383,6 +385,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -480,26 +483,28 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
-  EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
-  EXErrorRecovery: ac2622400a32be84604591f70d0efff416e4b9a2
-  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
-  EXFont: 2e1c6fe726d008a039db80df95f48b4921b7fe59
-  EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
-  EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
-  EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
-  Expo: 5316c3ecdc34eb0cad340d01dc8beec97c7e879e
-  ExpoModulesCore: a9a9bf32b2da35cd9b7299c80790c03a91ac7d15
-  EXSplashScreen: 57f329dbf25c5c12800feed79068a056453dc772
-  EXStructuredHeaders: 873e7f329c2f6279c1b1e0229df59c9861560b53
-  EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157
-  EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
+  EXApplication: 4e001850816f38eb4812cb02fe059974daeafe4d
+  EXConstants: 66361ff23b5ea7eae3684ffad0f15955c23b5134
+  EXErrorRecovery: 0e088d138e44f0e4a24655040e7f7c34ede8cc06
+  EXFileSystem: 624eef3e3a853f19cc0c26eaffab1519001d8c35
+  EXFont: 6e8f77d9741f5cd83f710adbf26ebb57a036283b
+  EXJSONUtils: bafb27ed20417c018d942f334d969102e67be7e5
+  EXKeepAwake: ca4071fb63b89a70b13d33f6147cf9b5433c122a
+  EXManifests: 15831e369de4e989f9cfe8c3321303f26745e41d
+  Expo: a3a1b909b62e388a0fd0c9bedb48b16e294b4050
+  ExpoModulesCore: c092c00c13403aa2acbf79973a00d6606732eb68
+  EXSplashScreen: 62f71e20d00cd42cf8cbdc808b848520ddebba01
+  EXStructuredHeaders: 7d4a100b8321c6db341e91e730949558d4a48818
+  EXUpdates: c6dcdb9a33cfb7d81cbe288e1ac7484fcda663d9
+  EXUpdatesInterface: 2413d24feea140d6b30f6c73ec7f7e0281d3594a
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
   FBReactNativeSpec: 973f6f79dfbafeec448bb4d702938ccf72727707
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
@@ -514,7 +519,7 @@ SPEC CHECKSUMS:
   React-jsi: a8b09c29521c798f1783348b37b511ba7b3dbeb3
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
   React-RCTActionSheet: 7448f049318d8d7e8a9a1ebb742ada721757eea8
   React-RCTAnimation: fb9b3fa1a4a9f5e6ab01b3368693ce69860ba76a
@@ -530,8 +535,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
   RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
+  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: c1b7cec7f3a5f94b61d70ba07514fec3d52c665f
+PODFILE CHECKSUM: 57ec0d543f2fc25504fea47f7ff99d530f41ba86
 
 COCOAPODS: 1.11.2
