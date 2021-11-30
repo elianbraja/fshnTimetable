@@ -14,16 +14,21 @@ export default function SingleDayTimetable(props) {
       </View>
       <ScrollView style={{flex:1, marginLeft: 15, marginRight: 15}} showsVerticalScrollIndicator={false}>
         <View style={styles.event_count}>
-          <Text style={styles.event_count_text}>5 Events:</Text>
+          <Text style={styles.event_count_text}>{props.timetable.length} Events:</Text>
         </View>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
-          <EventCard color={ColorPicker.getLightColor(props.day_index)}/>
+          {props.timetable.map((event, index) => {
+            return(
+              <EventCard
+                key={index}
+                color={ColorPicker.getLightColor(props.day_index)}
+                subject={event.subject}
+                teacher={event.teacher}
+                location={event.location}
+                time={event.time}
+                type={event.type}
+              />
+            )
+          })}
           <View style={{height:25}}></View>
       </ScrollView>
     </View>

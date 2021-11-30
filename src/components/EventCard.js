@@ -8,19 +8,20 @@ export default function EventCard(props) {
     <View style={styles(props).cardContainer}>
 
       <View style={styles(props).cardView}>
-        <Text style={styles(props).cardSubjectItem}>Network</Text>
+        <Text style={styles(props).cardSubjectItem}>{props.subject}</Text>
       </View>
 
       <View style={styles(props).cardView}>
-        <Text style={styles(props).cardItem}>{"09:00 --> 10:00"}</Text>
+        <Text style={styles(props).cardItem}>{props.time}</Text>
       </View>
 
       <View style={styles(props).cardView}>
         <View style={styles(props).cardViewRowDir}>
           <Ionicon name="location-sharp" size={20} color="#eff2ed" />
-          <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>C302</Text>
+          <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.location}</Text>
           <FontAwesome name="user" size={20} color="#eff2ed" />
-          <Text style={[styles(props).cardItem, {marginLeft:5}]}>{props.color}</Text>
+          <Text style={[styles(props).cardItem, {marginLeft:5}]}>{props.teacher}</Text>
+          <View style={[styles(props).roundText, {marginLeft:5}]}><Text stye={{fontWeight:"500"}}>{props.type}</Text></View>
         </View>
       </View>
     </View>
@@ -42,6 +43,15 @@ const styles = (props) => StyleSheet.create({
   cardView:{
     flex: 1,
     justifyContent:"center"
+  },
+
+  roundText:{
+    borderRadius:50,
+    width:25,
+    height:25,
+    backgroundColor:"#eff2ed",
+    justifyContent:"center",
+    alignItems:"center"
   },
 
   cardViewRowDir:{

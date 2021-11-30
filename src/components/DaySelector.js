@@ -10,7 +10,7 @@ export default function DaySelector(props) {
   return (
     <View style={styles.viewContainer}>
     {["Mon", "Tue", "Wed", "Thu", "Fri"].map((day, index) => (
-      <Text style={[styles.elements, props.day_index == index+1 ? {fontWeight:"bold", opacity:null} : null]} onPress={() => changeDay(index+1)}>{day}</Text>
+      <Text key = {index} style={[styles.elements, props.day_index == index+1 ? {fontWeight:"bold", opacity:null} : null]} onPress={() => changeDay(index+1)}>{day}</Text>
     ))}
     </View>
   );
