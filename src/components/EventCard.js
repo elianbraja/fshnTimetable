@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function EventCard(props) {
+  const [currentFont, setCurrentFont] = useState(25);
   return (
     <View style={styles(props).cardContainer}>
 
       <View style={styles(props).cardView}>
-        <Text style={styles(props).cardSubjectItem}>{props.subject}</Text>
+        <Text
+          numberOfLines={ 1 }
+          adjustsFontSizeToFit
+          style={ [styles(props).cardSubjectItem, { fontSize: currentFont }] }
+          onTextLayout={ (e) => {
+            const { lines } = e.nativeEvent;
+            if (lines.length > 1) {
+              setCurrentFont(currentFont - 1);
+            }
+          }}
+        >
+          {props.subject}
+        </Text>
       </View>
 
       <View style={styles(props).cardView}>
@@ -37,7 +50,8 @@ const styles = (props) => StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     padding: 5,
-    paddingLeft: 20
+    paddingLeft: 20,
+    paddingRight: 20
   },
 
   cardView:{
