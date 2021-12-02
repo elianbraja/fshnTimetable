@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ScrollView, Dimensions, InteractionManager, But
 import DaySelector from '../components/DaySelector'
 import SingleDayTimetable from '../components/SingleDayTimetable'
 import DateSettings from '../services/DateSettings'
-import {getTimetable} from '../services/Api/Api'
+import { getStudentTimetable, getPedagogTimetable } from '../services/Api/Api'
 import { DotIndicator } from 'react-native-indicators';
 
 
@@ -26,7 +26,8 @@ export default class Timetable extends React.Component {
   }
 
   async getTimetable() {
-    const timetable = await getTimetable();
+    // const timetable = await getStudentTimetable("1", "B1", "Bachelor në \"Informatikë\"");
+    const timetable = await getPedagogTimetable("ernest.shahini@fshn.edu.al");
     if(timetable.error)
       alert("Sorry, there was a problem!")
     else
