@@ -12,3 +12,11 @@ export async function getStudentTimetable(academic_year, group, subject) {
 export async function getPedagogTimetable(email) {
   return await resolve(axios.get(`http://localhost:3000/timetable/pedagog?email=${email}`).then(res => res.data));
 }
+
+export async function getSubjects(email) {
+  return await resolve(axios.get('http://localhost:3000/timetable/subjects').then(res => res.data));
+}
+
+export async function getProfessors(email) {
+  return await resolve(axios.get('http://localhost:3000/timetable/professors').then(res => res.data));
+}

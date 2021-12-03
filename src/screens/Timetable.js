@@ -27,7 +27,7 @@ export default class Timetable extends React.Component {
 
   async getTimetable() {
     // const timetable = await getStudentTimetable("1", "B1", "Bachelor në \"Informatikë\"");
-    const timetable = await getPedagogTimetable("ernest.shahini@fshn.edu.al");
+    const timetable = await getPedagogTimetable("julian.fejzaj@fshn.edu.al");
     if(timetable.error)
       alert("Sorry, there was a problem!")
     else

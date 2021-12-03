@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function EventCard(props) {
@@ -24,17 +23,25 @@ export default function EventCard(props) {
         </Text>
       </View>
 
-      <View style={styles(props).cardView}>
-        <Text style={styles(props).cardItem}>{props.time}</Text>
+      <View style={styles(props).cardViewRowDir}>
+        <FontAwesome name="clock-o" size={20} color="#eff2ed" />
+        <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.time}</Text>
       </View>
 
       <View style={styles(props).cardView}>
         <View style={styles(props).cardViewRowDir}>
-          <Ionicon name="location-sharp" size={20} color="#eff2ed" />
-          <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.location}</Text>
-          <FontAwesome name="user" size={20} color="#eff2ed" />
-          <Text style={[styles(props).cardItem, {marginLeft:5}]}>{props.teacher}</Text>
-          <View style={[styles(props).roundText, {marginLeft:5}]}><Text stye={{fontWeight:"500"}}>{props.type}</Text></View>
+
+          <View style={styles(props).cardViewRowDir}>
+            <FontAwesome name="map-marker" size={20} color="#eff2ed" />
+            <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.location}</Text>
+            <FontAwesome name="user" size={20} color="#eff2ed" />
+            <Text style={[styles(props).cardItem, {flex: 1, marginLeft:5}]}>{props.teacher}</Text>
+          </View>
+
+          <View>
+            <View style={[styles(props).roundText, {marginLeft:5}]}><Text stye={{fontWeight:"500"}}>{props.type}</Text></View>
+          </View>
+
         </View>
       </View>
     </View>
