@@ -9,8 +9,9 @@ import { DotIndicator } from 'react-native-indicators';
 
 
 export default class Timetable extends React.Component {
-  constructor(props) {
+  constructor(props, {navigation}) {
     super(props)
+    this.data = this.props.route.params
     this.scrollView = React.createRef();
     this.screenWidth = Dimensions.get('window').width
     this.ds = new DateSettings(new Date())
@@ -22,12 +23,13 @@ export default class Timetable extends React.Component {
   }
 
   componentDidMount = () => {
+    console.log(this.data)
     this.getTimetable();
   }
 
   async getTimetable() {
-    // const timetable = await getStudentTimetable("1", "B1", "Bachelor në \"Informatikë\"");
-    const timetable = await getPedagogTimetable("julian.fejzaj@fshn.edu.al");
+    const timetable = await getStudentTimetable(this.data.academicYear, this.data.group, this.data.subject);
+    // const timetable = await getPedagogTimetable("julian.fejzaj@fshn.edu.al");
     if(timetable.error)
       alert("Sorry, there was a problem!")
     else

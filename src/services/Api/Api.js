@@ -13,10 +13,10 @@ export async function getPedagogTimetable(email) {
   return await resolve(axios.get(`http://localhost:3000/timetable/pedagog?email=${email}`).then(res => res.data));
 }
 
-export async function getSubjects(email) {
+export async function getSubjects() {
   return await resolve(axios.get('http://localhost:3000/timetable/subjects').then(res => res.data));
 }
 
-export async function getProfessors(email) {
+export async function getProfessors() {
   return await resolve(axios.get('http://localhost:3000/timetable/professors').then(res => res.data));
 }
