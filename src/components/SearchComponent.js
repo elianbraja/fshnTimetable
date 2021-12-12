@@ -1,59 +1,56 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
+import { StyleSheet, Text, View, Button, TouchableWithoutFeedback } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
 
-export default function SearchComponent(props, {navigation}) {
+export const SearchComponent = forwardRef((props, ref) => {
 
-const [selectedItems, setSelectedItems] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState(props.items);
+  const [index, setIndex] = useState(props.index);
 
+
+  useEffect(() => {
+    setItems(props.items)
+    setOpen(props.active)
+  }, [props]);
+
+  useImperativeHandle(ref, () => ({
+    closeDropdown() {
+      setOpen(false)
+    }
+  }));
+
+  function setSelectedValue(value) {
+    setValue(value)
+    props.passSelectedToParent(value)
+  }
+
+  function setDropdownStatus(status) {
+    setOpen(status)
+    props.setActiveDropdwon(index)
+  }
+
+  function setSelectedItems(items) {
+    setItems(tiems)
+  }
 
   return (
-    <View style={styles.viewContainer}>
-      <View style={{width: "100%"}}>
-        <SearchableDropdown
-              multi={true}
-              selectedItems={selectedItems}
-              onItemSelect={(item) => {
-                props.passSelectedToParent(item["name"])
-                const items = props.data;
-                setSelectedItems({ items });
-              }}
-              containerStyle={{ padding: 5 }}
-              itemStyle={{
-                padding: 10,
-                marginTop: 2,
-                backgroundColor: '#ddd',
-                borderColor: '#bbb',
-                borderWidth: 1,
-                borderRadius: 5,
-              }}
-              itemTextStyle={{ color: '#222' }}
-              itemsContainerStyle={{ maxHeight: 140 }}
-              items={props.data}
-              chip={true}
-              resetValue={false}
-              textInputProps={
-                {
-                  placeholder: props.placeholder,
-                  underlineColorAndroid: "transparent",
-                  style: {
-                      padding: 12,
-                      borderWidth: 1,
-                      borderColor: '#ccc',
-                      borderRadius: 5,
-                  }
-                }
-              }
-              listProps={
-                {
-                  nestedScrollEnabled: true,
-                }
-              }
-            />
-          </View>
-    </View>
+      <View style={[styles.viewContainer, {zIndex: open ? 1: 0}]}>
+        <DropDownPicker
+          searchable={props.searchable}
+          open={open}
+          value={value}
+          items={items}
+          setOpen={(status) => {status==true ? setDropdownStatus(status) : null}}
+          setValue={(value) => setSelectedValue(value) }
+          placeholder = {props.placeholder}
+          searchPlaceholder="Search..."
+        />
+      </View>
   );
-}
+})
 
 const styles = StyleSheet.create({
   viewContainer: {

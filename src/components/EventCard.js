@@ -6,7 +6,6 @@ export default function EventCard(props) {
   const [currentFont, setCurrentFont] = useState(25);
   return (
     <View style={styles(props).cardContainer}>
-
       <View style={styles(props).cardView}>
         <Text
           numberOfLines={ 1 }
@@ -34,7 +33,7 @@ export default function EventCard(props) {
           <View style={styles(props).cardViewRowDir}>
             <FontAwesome name="map-marker" size={20} color="#eff2ed" />
             <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.location}</Text>
-            <FontAwesome name="user" size={20} color="#eff2ed" />
+            <FontAwesome name = {props.status=="student" ? "user" : "group"} size={20} color="#eff2ed" />
             <Text style={[styles(props).cardItem, {flex: 1, marginLeft:5}]}>{props.teacher}</Text>
           </View>
 

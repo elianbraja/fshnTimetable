@@ -9,7 +9,7 @@ import { DotIndicator } from 'react-native-indicators';
 
 
 export default class Timetable extends React.Component {
-  constructor(props, {navigation}) {
+  constructor(props) {
     super(props)
     this.data = this.props.route.params
     this.scrollView = React.createRef();
@@ -28,8 +28,13 @@ export default class Timetable extends React.Component {
   }
 
   async getTimetable() {
-    const timetable = await getStudentTimetable(this.data.academicYear, this.data.group, this.data.subject);
-    // const timetable = await getPedagogTimetable("julian.fejzaj@fshn.edu.al");
+    let timetable = []
+    if(this.data.status == "student"){
+      timetable = await getStudentTimetable(this.data.academicYear, this.data.group, this.data.subject);
+    }
+    else {
+      timetable = await getPedagogTimetable(this.data.professor);
+    }
     if(timetable.error)
       alert("Sorry, there was a problem!")
     else
@@ -80,7 +85,7 @@ export default class Timetable extends React.Component {
           next_day.setDate(next_day.getDate() + index-1)
           return (
           <View key={index} style={{width: this.screenWidth, justifyContent: "center",alignItems: "center"}}>
-            <SingleDayTimetable date={next_day} day_index={index} timetable={day_events_array.timetable}/>
+            <SingleDayTimetable status={this.data.status} date={next_day} day_index={index} timetable={day_events_array.timetable}/>
           </View>
         )})}
 

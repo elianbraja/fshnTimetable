@@ -15,9 +15,35 @@ export default function App() {
     <View style={styles.container}>
       <Header/>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Search"}>
-          <Stack.Screen name="Search" component={Search}/>
-          <Stack.Screen name="Timetable" component={Timetable}/>
+        <Stack.Navigator initialRouteName={"Search"} style={{backgroundColor:"red"}}>
+          <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{
+              title: 'Search',
+              headerStyle: {
+                backgroundColor: '#24A0ED',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Timetable"
+            component={Timetable}
+            options={{
+              title: 'Timetable',
+              headerStyle: {
+                backgroundColor: '#24A0ED',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

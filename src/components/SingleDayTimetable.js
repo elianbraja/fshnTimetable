@@ -26,6 +26,7 @@ export default function SingleDayTimetable(props) {
                 location={event.location}
                 time={event.time}
                 type={event.type}
+                status={props.status}
               />
             )
           })}
@@ -44,7 +45,8 @@ const styles = StyleSheet.create({
 
   datetime: {
     marginTop: 15,
-    height: "10%",
+    marginBottom: 15,
+    height: 50,
     fontFamily: "OpenSans-Bold",
     paddingLeft: 25
   },
