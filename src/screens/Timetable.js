@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView, Dimensions, InteractionManager, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Dimensions, InteractionManager, Button, AsyncStorage } from 'react-native';
 import DaySelector from '../components/DaySelector'
 import SingleDayTimetable from '../components/SingleDayTimetable'
 import DateSettings from '../services/DateSettings'
@@ -11,29 +11,54 @@ import { DotIndicator } from 'react-native-indicators';
 export default class Timetable extends React.Component {
   constructor(props) {
     super(props)
-    this.data = this.props.route.params
     this.scrollView = React.createRef();
     this.screenWidth = Dimensions.get('window').width
     this.ds = new DateSettings(new Date())
     this.state = {
+      data: null,
       day_index: [0,6].includes(this.ds.getDayIndex()) ? 1 : this.ds.getDayIndex(),
       monday_date: this.ds.getMondayDate(),
       timetable: null
     };
   }
 
-  componentDidMount = () => {
-    console.log(this.data)
-    this.getTimetable();
+  componentDidMount = async () => {
+    let storage_data = await this.importData()
+    let data = null
+
+    if(storage_data.length > 0){
+       data = {
+         status: await AsyncStorage.getItem('status'),
+         academicYear: await AsyncStorage.getItem('academicYear'),
+         group: await AsyncStorage.getItem('group'),
+         subject: await AsyncStorage.getItem('subject'),
+         professor: await AsyncStorage.getItem('professor')
+       }
+    }
+    else{
+       data = this.props.route.params
+    }
+    this.setState({data: data})
+    this.getTimetable(data);
   }
 
-  async getTimetable() {
+  importData = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const result = await AsyncStorage.multiGet(keys);
+      return result
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async getTimetable(data) {
     let timetable = []
-    if(this.data.status == "student"){
-      timetable = await getStudentTimetable(this.data.academicYear, this.data.group, this.data.subject);
+    if(data.status == "student"){
+      timetable = await getStudentTimetable(data.academicYear, data.group, data.subject);
     }
     else {
-      timetable = await getPedagogTimetable(this.data.professor);
+      timetable = await getPedagogTimetable(data.professor);
     }
     if(timetable.error)
       alert("Sorry, there was a problem!")
@@ -85,7 +110,7 @@ export default class Timetable extends React.Component {
           next_day.setDate(next_day.getDate() + index-1)
           return (
           <View key={index} style={{width: this.screenWidth, justifyContent: "center",alignItems: "center"}}>
-            <SingleDayTimetable status={this.data.status} date={next_day} day_index={index} timetable={day_events_array.timetable}/>
+            <SingleDayTimetable status={this.state.data.status} date={next_day} day_index={index} timetable={day_events_array.timetable}/>
           </View>
         )})}
 

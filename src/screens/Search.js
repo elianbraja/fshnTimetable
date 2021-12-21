@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage } from 'react-native';
 import {SearchComponent} from '../components/SearchComponent';
+import CheckBox from '@react-native-community/checkbox';
 import { getSubjects } from '../services/Api/Api'
 import { getProfessors } from '../services/Api/Api'
 
@@ -56,6 +57,36 @@ export default function Search({navigation}) {
   function handleActiveDropdown(index) {
     setActiveDropdwon(index)
   }
+
+  function setToggleCheckBox(value) {
+    alert(value)
+  }
+
+  handleSearch = () => {
+    navigation.navigate('Timetable', {
+      status: status,
+      subject: subject,
+      professor: professor,
+      academicYear: academicYear,
+      group: group
+    })
+    storeData()
+  }
+
+  storeData = async () => {
+    try {
+      let items = null
+      if(status == "student"){
+        items = [['subject', subject], ['academicYear', academicYear], ['group', group], ['status', 'student']]
+      }
+      else{
+        items = [['professor', professor], ['status', 'professor']]
+      }
+      await AsyncStorage.multiSet(items)
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => closeDropdown()}>
@@ -120,20 +151,26 @@ export default function Search({navigation}) {
           />
         </View>
 
+        <View style={{flexDirection:"row", marginTop:20, alignItems: "center"}}>
+          <CheckBox
+            value={true}
+            onValueChange={null}
+            onCheckColor="#24A0ED"
+            tintColor="#24A0ED"
+            onTintColor="#24A0ED"
+            offAnimationType="bounce"
+            onAnimationType="bounce"
+            onValueChange={(value) => setToggleCheckBox(value)}
+          />
+          <Text style={{marginLeft:15}}>Remember selections</Text>
+        </View>
+
 
         <View style={styles.submitButton}>
           <Button
             title="Search"
             color= "white"
-            onPress={() =>
-              navigation.navigate('Timetable', {
-                status: status,
-                subject: subject,
-                professor: professor,
-                academicYear: academicYear,
-                group: group
-              })
-            }
+            onPress={() => handleSearch()}
           />
         </View>
       </View>
