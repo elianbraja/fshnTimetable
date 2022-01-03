@@ -22,6 +22,7 @@ export default function Search({navigation}) {
   const [activeDropdown, setActiveDropdwon] = useState(null)
   const [status, setStatus] = useState(null)
   const [saveData, setSaveData] = useState(true)
+  const [searchButtonActive, setSearchButtonActive] = useState(false)
 
 
 
@@ -80,6 +81,16 @@ export default function Search({navigation}) {
     setSaveData(value)
   }
 
+  function checkValidity(...args) {
+    for (let i=0; i<args.length; i++){
+      if(!eval(args[i])){
+        setSearchButtonActive(false)
+        return
+      }
+    }
+    setSearchButtonActive(true)
+  }
+
   handleSearch = () => {
     navigation.navigate('Timetable', {
       status: status,
@@ -119,12 +130,12 @@ export default function Search({navigation}) {
           <View style={styles.viewContainer}>
             <Text style={styles.welcome}>Welcome</Text>
             <View style={styles.stausSelector}>
-              <TouchableOpacity onPress={() => {setStatus("student"); callSubjects(); setActiveDropdwon(null)}}>
+              <TouchableOpacity onPress={() => {setStatus("student"); callSubjects(); setActiveDropdwon(null); checkValidity("academicYear", "subject", "group");}}>
                 <View style={status == "student" ? styles.statusCardActive : styles.statusCard}>
                   <Text style={status == "student" ? styles.statusTextActive : styles.statusText}>STUDENT</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setStatus("professor"); callProfessors(); setActiveDropdwon(null)}}>
+              <TouchableOpacity onPress={() => {setStatus("professor"); callProfessors(); setActiveDropdwon(null); checkValidity("professor");}}>
                 <View style={status == "professor" ? styles.statusCardActive : styles.statusCard}>
                   <Text style={status == "professor" ? styles.statusTextActive : styles.statusText}>PROFESSOR</Text>
                 </View>
@@ -138,7 +149,7 @@ export default function Search({navigation}) {
                 ref={childRef1}
                 active={activeDropdown==1}
                 items={subjects}
-                passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject);}}
+                passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject); checkValidity("academicYear", "group");}}
                 placeholder={"Select subject"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
               />
@@ -151,7 +162,7 @@ export default function Search({navigation}) {
                 ref={childRef2}
                 active={activeDropdown==2}
                 items={professors}
-                passSelectedToParent={(professor) => { setActiveDropdwon(null); setProfessor(professor);}}
+                passSelectedToParent={(professor) => { setActiveDropdwon(null); setProfessor(professor); checkValidity();}}
                 placeholder={"Select professor"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
               />
@@ -163,7 +174,7 @@ export default function Search({navigation}) {
                 ref={childRef3}
                 active={activeDropdown==3}
                 items={academicYears}
-                passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear)}}
+                passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "subject");}}
                 placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
               />
               <SearchComponent
@@ -171,7 +182,7 @@ export default function Search({navigation}) {
                 ref={childRef4}
                 active={activeDropdown==4}
                 items={groups}
-                passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group)}}
+                passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("subject", "academicYear");}}
                 placeholder={"Select group"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
               />
@@ -192,10 +203,12 @@ export default function Search({navigation}) {
             </View>
 
 
-            <View style={styles.submitButton}>
+            <View style={[styles.submitButton, searchButtonActive ? null : {opacity:0.5} ]}>
               <Button
                 title="Search"
                 color= "white"
+                opacity = "1"
+                disabled = {searchButtonActive ? false : true}
                 onPress={() => handleSearch()}
               />
             </View>
