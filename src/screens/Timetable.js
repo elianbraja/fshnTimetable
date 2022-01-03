@@ -22,7 +22,11 @@ export default class Timetable extends React.Component {
     };
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    this.receiveData()
+  }
+
+  receiveData = async () => {
     let storage_data = await this.importData()
     let data = null
 
@@ -90,42 +94,55 @@ export default class Timetable extends React.Component {
   render(){
     const scrollView = React.createRef();
 
-    if(this.state.timetable){
     return (
-      <View style={styles.container}>
-        <DaySelector day_index={this.state.day_index} changeDay={(index) => this.changeDay(index)}/>
-        <ScrollView
-          horizontal={true}
-          decelerationRate={0.5}
-          snapToInterval={this.screenWidth}
-          snapToAlignment={"center"}
-          showsHorizontalScrollIndicator={false}
-          ref={this.scrollView}
-          onMomentumScrollEnd={this.handleScroll}
-          onLayout={() => this.scrollToInitialPosition(this.state.day_index, false)}
-        >
-        {this.state.timetable.map((day_events_array) => {
-          let index = day_events_array.day
-          const next_day = new Date(this.state.monday_date)
-          next_day.setDate(next_day.getDate() + index-1)
-          return (
-          <View key={index} style={{width: this.screenWidth, justifyContent: "center",alignItems: "center"}}>
-            <SingleDayTimetable status={this.state.data.status} date={next_day} day_index={index} timetable={day_events_array.timetable}/>
+      <View style={styles.parentView}>
+          <View style={styles.container}>
+            {this.state.timetable ?
+              <View style={{height: "100%"}}>
+                <DaySelector day_index={this.state.day_index} changeDay={(index) => this.changeDay(index)}/>
+                <ScrollView
+                  horizontal={true}
+                  decelerationRate={0.5}
+                  snapToInterval={this.screenWidth}
+                  snapToAlignment={"center"}
+                  showsHorizontalScrollIndicator={false}
+                  ref={this.scrollView}
+                  onMomentumScrollEnd={this.handleScroll}
+                  onLayout={() => this.scrollToInitialPosition(this.state.day_index, false)}
+                >
+                {this.state.timetable.map((day_events_array) => {
+                  let index = day_events_array.day
+                  const next_day = new Date(this.state.monday_date)
+                  next_day.setDate(next_day.getDate() + index-1)
+                  return (
+                  <View key={index} style={{width: this.screenWidth, justifyContent: "center",alignItems: "center"}}>
+                    <SingleDayTimetable status={this.state.data.status} date={next_day} day_index={index} timetable={day_events_array.timetable}/>
+                  </View>
+                )})}
+                </ScrollView>
+              </View>
+            :
+              <DotIndicator/>
+            }
           </View>
-        )})}
-
-        </ScrollView>
       </View>
-  )}
-  else{
-    return <DotIndicator color='black' />
-  }
+  )
 };
 }
 
 const styles = StyleSheet.create({
+
+  parentView:{
+    flex: 1,
+    backgroundColor: "#24A0ED"
+  },
+
   container: {
     flex:1,
-    margin: 5
+    backgroundColor: "white",
+    borderWidth:2,
+    borderColor: "white",
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20
   }
 });
