@@ -1,6 +1,5 @@
 import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
 import { StyleSheet, Text, View, Button, TouchableWithoutFeedback } from 'react-native';
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 export const SearchComponent = forwardRef((props, ref) => {
@@ -9,12 +8,20 @@ export const SearchComponent = forwardRef((props, ref) => {
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(props.items);
   const [index, setIndex] = useState(props.index);
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     setItems(props.items)
     setOpen(props.active)
-  }, [props]);
+  }, [props.active, props.items]);
+
+  useEffect(() => {
+    if(props.defaultValue && props.defaultValue != value){
+      setValue(props.defaultValue)
+      props.passSelectedToParent(props.defaultValue)
+    }
+  }, [props.defaultValue]);
 
   useImperativeHandle(ref, () => ({
     closeDropdown() {
@@ -32,14 +39,11 @@ export const SearchComponent = forwardRef((props, ref) => {
     props.setActiveDropdwon(index)
   }
 
-  function setSelectedItems(items) {
-    setItems(tiems)
-  }
-
   return (
       <View style={[styles.viewContainer, {zIndex: open ? 1: 0}]}>
         <DropDownPicker
           searchable={props.searchable}
+          loading={loading}
           open={open}
           value={value}
           items={items}

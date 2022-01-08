@@ -37,6 +37,14 @@ export default function Search({navigation}) {
         const status = await AsyncStorage.getItem('status')
         if(status != null){
           setStatus(status)
+          if(status == "professor"){
+            setProfessor(await AsyncStorage.getItem('professor'))
+          }
+          else if(status == "student"){
+            setSubject(await AsyncStorage.getItem('subject'))
+            setAcademicYear(await AsyncStorage.getItem('academicYear'))
+            setGroup(await AsyncStorage.getItem('group'))
+          }
           navigation.navigate('Timetable')
         }
         else{
@@ -71,6 +79,7 @@ export default function Search({navigation}) {
     childRef2.current.closeDropdown()
     childRef3.current.closeDropdown()
     childRef4.current.closeDropdown()
+    setActiveDropdwon(null)
   }
 
   function handleActiveDropdown(index) {
@@ -152,6 +161,7 @@ export default function Search({navigation}) {
                 passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject); checkValidity("academicYear", "group");}}
                 placeholder={"Select subject"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                defaultValue={status == "student" ? subject : null}
               />
             </View>
 
@@ -165,6 +175,7 @@ export default function Search({navigation}) {
                 passSelectedToParent={(professor) => { setActiveDropdwon(null); setProfessor(professor); checkValidity();}}
                 placeholder={"Select professor"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                defaultValue={status == "professor" ? professor : null}
               />
             </View>
 
@@ -176,6 +187,7 @@ export default function Search({navigation}) {
                 items={academicYears}
                 passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "subject");}}
                 placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                defaultValue={status == "student" ? academicYear : null}
               />
               <SearchComponent
                 index={4}
@@ -185,6 +197,7 @@ export default function Search({navigation}) {
                 passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("subject", "academicYear");}}
                 placeholder={"Select group"}
                 setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                defaultValue={status == "student" ? group : null}
               />
             </View>
 
