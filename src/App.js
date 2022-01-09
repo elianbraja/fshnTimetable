@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, AsyncStorage, Button, Linking } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, Button, Linking, Image } from 'react-native';
 import Timetable from './screens/Timetable'
 import Search from './screens/Search'
-import Header from './components/Header'
 import{ NativeRouter, Switch, Route } from 'react-router-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 export default function App({navigation}) {
 
@@ -26,18 +26,7 @@ export default function App({navigation}) {
               name="Search"
               component={Search}
               options={{
-                headerStyle: {
-                  backgroundColor: '#24A0ED',
-                  shadowColor: "transparent",
-                  elevation: 0
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                },
-                headerRight: () => (
-                  infoPoint
-                )
+                headerShown: false
               }}
             />
             <Stack.Screen

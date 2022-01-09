@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage, KeyboardAvoidingView, Keyboard } from 'react-native';
 import {SearchComponent} from '../components/SearchComponent';
 import CheckBox from '@react-native-community/checkbox';
 import { getSubjects } from '../services/Api/Api'
 import { getProfessors } from '../services/Api/Api'
+import SearchHeader from '../components/SearchHeader'
 
 export default function Search({navigation}) {
 
@@ -134,100 +135,111 @@ export default function Search({navigation}) {
   return (
     <View style={{height:"100%"}}>
       {status ?
-        <TouchableWithoutFeedback onPress={() => closeDropdown()}>
-        <View style={styles.parentView}>
-          <View style={styles.viewContainer}>
-            <Text style={styles.welcome}>Welcome</Text>
-            <View style={styles.stausSelector}>
-              <TouchableOpacity onPress={() => {setStatus("student"); callSubjects(); setActiveDropdwon(null); checkValidity("academicYear", "subject", "group");}}>
-                <View style={status == "student" ? styles.statusCardActive : styles.statusCard}>
-                  <Text style={status == "student" ? styles.statusTextActive : styles.statusText}>STUDENT</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setStatus("professor"); callProfessors(); setActiveDropdwon(null); checkValidity("professor");}}>
-                <View style={status == "professor" ? styles.statusCardActive : styles.statusCard}>
-                  <Text style={status == "professor" ? styles.statusTextActive : styles.statusText}>PROFESSOR</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset = {100}
+          style={{flex: 1, backgroundColor: "white"}}
+        >
+          <TouchableWithoutFeedback onPress={() => {closeDropdown(); Keyboard.dismiss}}>
+            <View style={styles.parentView}>
+              <SearchHeader/>
+              <View style={styles.viewContainer}>
 
-            <View style={ status == "student" ? {zIndex: 1} : {display: "none"}}>
-              <SearchComponent
-                searchable
-                index={1}
-                ref={childRef1}
-                active={activeDropdown==1}
-                items={subjects}
-                passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject); checkValidity("academicYear", "group");}}
-                placeholder={"Select subject"}
-                setActiveDropdwon={(index) => handleActiveDropdown(index)}
-                defaultValue={status == "student" ? subject : null}
-              />
-            </View>
+                  <View style={styles.stausSelector}>
+                    <TouchableOpacity onPress={() => {setStatus("student"); callSubjects(); setActiveDropdwon(null); checkValidity("academicYear", "subject", "group");}}>
+                      <View style={status == "student" ? styles.statusCardActive : styles.statusCard}>
+                        <Text style={status == "student" ? styles.statusTextActive : styles.statusText}>STUDENT</Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {setStatus("professor"); callProfessors(); setActiveDropdwon(null); checkValidity("professor");}}>
+                      <View style={status == "professor" ? styles.statusCardActive : styles.statusCard}>
+                        <Text style={status == "professor" ? styles.statusTextActive : styles.statusText}>PROFESSOR</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
 
-            <View style={ status == "professor" ? {zIndex: 1} : {display: "none"}}>
-              <SearchComponent
-                searchable
-                index={2}
-                ref={childRef2}
-                active={activeDropdown==2}
-                items={professors}
-                passSelectedToParent={(professor) => { setActiveDropdwon(null); setProfessor(professor); checkValidity();}}
-                placeholder={"Select professor"}
-                setActiveDropdwon={(index) => handleActiveDropdown(index)}
-                defaultValue={status == "professor" ? professor : null}
-              />
-            </View>
+                  <View style={ status == "student" ? {zIndex: 1} : {display: "none"}}>
+                    <SearchComponent
+                      searchable
+                      index={1}
+                      ref={childRef1}
+                      active={activeDropdown==1}
+                      items={subjects}
+                      passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject); checkValidity("academicYear", "group");}}
+                      placeholder={"Select subject"}
+                      setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                      defaultValue={status == "student" ? subject : null}
+                    />
+                  </View>
 
-            <View style={status == "professor" ? {display:"none"} : {zIndex: activeDropdown==1 ? 0 : 1}}>
-              <SearchComponent
-                index={3}
-                ref={childRef3}
-                active={activeDropdown==3}
-                items={academicYears}
-                passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "subject");}}
-                placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
-                defaultValue={status == "student" ? academicYear : null}
-              />
-              <SearchComponent
-                index={4}
-                ref={childRef4}
-                active={activeDropdown==4}
-                items={groups}
-                passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("subject", "academicYear");}}
-                placeholder={"Select group"}
-                setActiveDropdwon={(index) => handleActiveDropdown(index)}
-                defaultValue={status == "student" ? group : null}
-              />
-            </View>
+                  <View style={ status == "professor" ? {zIndex: 1} : {display: "none"}}>
+                    <SearchComponent
+                      searchable
+                      index={2}
+                      ref={childRef2}
+                      active={activeDropdown==2}
+                      items={professors}
+                      passSelectedToParent={(professor) => { setActiveDropdwon(null); setProfessor(professor); checkValidity();}}
+                      placeholder={"Select professor"}
+                      setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                      defaultValue={status == "professor" ? professor : null}
+                    />
+                  </View>
 
-            <View style={{flexDirection:"row", marginTop:20, alignItems: "center"}}>
-              <CheckBox
-                value={true}
-                onValueChange={null}
-                onCheckColor="#24A0ED"
-                tintColor="#24A0ED"
-                onTintColor="#24A0ED"
-                offAnimationType="bounce"
-                onAnimationType="bounce"
-                onValueChange={(value) => setToggleCheckBox(value)}
-              />
-              <Text style={{marginLeft:15}}>Remember selections</Text>
-            </View>
+                  <View style={status == "professor" ? {display:"none"} : {zIndex: activeDropdown==1 ? 0 : 1}}>
+                    <SearchComponent
+                      index={3}
+                      ref={childRef3}
+                      active={activeDropdown==3}
+                      items={academicYears}
+                      passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "subject");}}
+                      placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                      defaultValue={status == "student" ? academicYear : null}
+                    />
+                    <SearchComponent
+                      index={4}
+                      ref={childRef4}
+                      active={activeDropdown==4}
+                      items={groups}
+                      passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("subject", "academicYear");}}
+                      placeholder={"Select group"}
+                      setActiveDropdwon={(index) => handleActiveDropdown(index)}
+                      defaultValue={status == "student" ? group : null}
+                    />
+                  </View>
+
+                  <View style={{flexDirection:"row", marginTop:20, marginLeft:5, alignItems: "center"}}>
+                    <CheckBox
+                      value={true}
+                      onValueChange={null}
+                      onCheckColor="#24A0ED"
+                      tintColor="#24A0ED"
+                      onTintColor="#24A0ED"
+                      offAnimationType="bounce"
+                      onAnimationType="bounce"
+                      onValueChange={(value) => setToggleCheckBox(value)}
+                    />
+                    <Text style={{marginLeft:15}}>Remember selections</Text>
+                  </View>
+
+                  <View style={[styles.submitButton, searchButtonActive ? null : {opacity:0.5} ]}>
+                    <Button
+                      title="Search"
+                      color= "white"
+                      opacity = "1"
+                      disabled = {searchButtonActive ? false : true}
+                      onPress={() => handleSearch()}
+                    />
+                  </View>
+
+                  <View style={{height:25}}></View>
 
 
-            <View style={[styles.submitButton, searchButtonActive ? null : {opacity:0.5} ]}>
-              <Button
-                title="Search"
-                color= "white"
-                opacity = "1"
-                disabled = {searchButtonActive ? false : true}
-                onPress={() => handleSearch()}
-              />
+              </View>
+
             </View>
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
       :
         null
       }
@@ -239,7 +251,7 @@ const styles = StyleSheet.create({
 
   parentView:{
     flex: 1,
-    backgroundColor: "#24A0ED"
+    backgroundColor: "white"
   },
 
   viewContainer: {
@@ -251,7 +263,8 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    padding: 10
+    padding: 10,
+    flex: 1
   },
 
   welcome: {
@@ -262,7 +275,8 @@ const styles = StyleSheet.create({
   stausSelector: {
     marginTop: 20,
     flexDirection:"row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 10
   },
 
   statusCard: {
