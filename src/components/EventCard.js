@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { PulseIndicator } from 'react-native-indicators';
 
 export default function EventCard(props) {
   const [currentFont, setCurrentFont] = useState(25);
+
   return (
     <View style={styles(props).cardContainer}>
       <View style={styles(props).cardView}>
-        <Text
-          numberOfLines={ 1 }
-          adjustsFontSizeToFit
-          style={ [styles(props).cardSubjectItem, { fontSize: currentFont }] }
-          onTextLayout={ (e) => {
-            const { lines } = e.nativeEvent;
-            if (lines.length > 1) {
-              setCurrentFont(currentFont - 1);
-            }
-          }}
-        >
-          {props.subject}
-        </Text>
+        <View style={{flex: 1}}>
+          <Text
+            numberOfLines={ 1 }
+            adjustsFontSizeToFit
+            style={ [styles(props).cardSubjectItem, { fontSize: currentFont }] }
+            onTextLayout={ (e) => {
+              const { lines } = e.nativeEvent;
+              if (lines.length > 1) {
+                setCurrentFont(currentFont - 1);
+              }
+            }}
+          >
+            {props.subject}
+          </Text>
+        </View>
+        <View>
+          {props.step == "now" ? <PulseIndicator color='#d45920' size={30}/> : null}
+        </View>
       </View>
 
       <View style={styles(props).cardViewRowDir}>
@@ -50,8 +57,8 @@ export default function EventCard(props) {
 const styles = (props) => StyleSheet.create({
   cardContainer: {
     borderWidth: 1,
-    backgroundColor: props.color,
-    borderColor: props.color,
+    backgroundColor: props.step == "completed" ? "#d6d6d6" : props.color,
+    borderColor: props.step == "completed" ? "#d6d6d6" : props.color,
     height: 100,
     borderRadius: 10,
     marginTop: 10,
@@ -62,7 +69,8 @@ const styles = (props) => StyleSheet.create({
 
   cardView:{
     flex: 1,
-    justifyContent:"center"
+    justifyContent:"center",
+    flexDirection:"row"
   },
 
   roundText:{
