@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { DotIndicator } from 'react-native-indicators';
+import normalize from 'react-native-normalize';
 
 export default function Header() {
   const [loading, setLoading] = useState(true)
@@ -14,10 +15,10 @@ export default function Header() {
       <Image
         style={[{
           width: "100%",
-          resizeMode: 'contain'},
+          resizeMode: 'stretch'},
           loading ? {opacity:0, height:1} : {height: "100%"}]}
         onLoad={() => setLoading(false)}
-        source={require('../assets/img.jpeg')}
+        source={require('../assets/bottom_image.jpeg')}
       />
     </View>
   );
@@ -25,9 +26,8 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   viewContainer: {
-    height: "40%",
-    marginTop: 25,
+    height: "100%",
     alignItems: "center",
-    justifyContent:"center",
+    justifyContent:"center"
   }
 });

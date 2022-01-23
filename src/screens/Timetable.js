@@ -65,7 +65,7 @@ export default class Timetable extends React.Component {
       timetable = await getPedagogTimetable(data.professor);
     }
     if(timetable.error)
-      alert("Sorry, there was a problem!")
+      return
     else
       this.setState({
         timetable: timetable.data

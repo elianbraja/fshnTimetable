@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
 import { StyleSheet, Text, View, Button, TouchableWithoutFeedback } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import normalize from 'react-native-normalize';
 
 export const SearchComponent = forwardRef((props, ref) => {
 
@@ -51,6 +52,7 @@ export const SearchComponent = forwardRef((props, ref) => {
           setValue={(value) => setSelectedValue(value) }
           placeholder = {props.placeholder}
           searchPlaceholder="Search..."
+          style={{height: normalize(40)}}
         />
       </View>
   );
