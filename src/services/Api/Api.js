@@ -6,7 +6,7 @@ export async function getCreator() {
 }
 
 export async function getStudentTimetable(academic_year, group, subject) {
-  return await resolve(axios.get(`https://fshn-timetable.herokuapp.com/student?academic_year=${academic_year}&group=${group}&subject=${subject}`).then(res => res.data));
+  return await resolve(axios.get(`https://fshn-timetable.herokuapp.com/timetable/student?academic_year=${academic_year}&group=${group}&subject=${subject}`).then(res => res.data));
 }
 
 export async function getPedagogTimetable(email) {
