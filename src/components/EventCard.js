@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { PulseIndicator } from 'react-native-indicators';
+import normalize from 'react-native-normalize';
 
 export default function EventCard(props) {
-  const [currentFont, setCurrentFont] = useState(25);
+
+  function getFontSize(text){
+    return Math.sqrt((Dimensions.get('window').width - 70) * 30/text.length)
+  }
 
   return (
     <View style={styles(props).cardContainer}>
       <View style={styles(props).cardView}>
-        <View style={{flex: 1}}>
+        <View style={{display:"flex", flex: 1, justifyContent:"center"}}>
           <Text
-            numberOfLines={ 1 }
-            adjustsFontSizeToFit
-            style={ [styles(props).cardSubjectItem, { fontSize: currentFont }] }
-            onTextLayout={ (e) => {
-              const { lines } = e.nativeEvent;
-              if (lines.length > 1) {
-                setCurrentFont(currentFont - 1);
-              }
-            }}
+            numberOfLines={1}
+            style={ [styles(props).cardSubjectItem, { fontSize: getFontSize(props.subject) > normalize(20) ? normalize(20) : getFontSize(props.subject) }] }
           >
             {props.subject}
           </Text>
         </View>
         <View>
-          {props.step == "now" ? <PulseIndicator color='#d45920' size={30}/> : null}
+          {props.step == "now" ? <PulseIndicator color='#d45920' size={25}/> : null}
         </View>
       </View>
 
@@ -39,9 +36,9 @@ export default function EventCard(props) {
 
           <View style={styles(props).cardViewRowDir}>
             <FontAwesome name="map-marker" size={20} color="#eff2ed" />
-            <Text style={[styles(props).cardItem, {marginRight:15, marginLeft:5}]}>{props.location}</Text>
+            <Text style={[styles(props).cardItem, {fontSize: 13, marginRight:15, marginLeft:5}]}>{props.location}</Text>
             <FontAwesome name = {props.status=="student" ? "user" : "group"} size={20} color="#eff2ed" />
-            <Text style={[styles(props).cardItem, {flex: 1, marginLeft:5}]}>{props.teacher}</Text>
+            <Text style={[styles(props).cardItem, {fontSize: 13, marginLeft:5}]}>{props.teacher}</Text>
           </View>
 
           <View>

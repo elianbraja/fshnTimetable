@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView, Dimensions, InteractionManager, Button, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, InteractionManager, Button, AsyncStorage } from 'react-native';
+import { ScrollView} from 'react-native-gesture-handler'
 import DaySelector from '../components/DaySelector'
 import SingleDayTimetable from '../components/SingleDayTimetable'
 import DateSettings from '../services/DateSettings'
@@ -78,18 +79,16 @@ export default class Timetable extends React.Component {
 
   changeDay = (index) => {
     this.scrollToInitialPosition(index, true)
-    this.setState({
-      day_index: index
-    })
   }
 
-  handleScroll = (event) => {
-    const positionX = event.nativeEvent.contentOffset.x;
-    const current_index = Math.floor(positionX/this.screenWidth)
+  isCloseToEnd = (event) => {
+    let screen_width = this.screenWidth
+    let x = event.nativeEvent.contentOffset.x
+
     this.setState({
-      day_index: current_index + 1
+      day_index: Math.round(x/screen_width) + 1
     })
-  };
+  }
 
   render(){
     const scrollView = React.createRef();
@@ -101,13 +100,15 @@ export default class Timetable extends React.Component {
               <View style={{height: "100%"}}>
                 <DaySelector day_index={this.state.day_index} changeDay={(index) => this.changeDay(index)}/>
                 <ScrollView
+                  pagingEnabled
+                  scrollEventThrottle={16}
                   horizontal={true}
-                  decelerationRate={0.5}
+                  decelerationRate={"fast"}
                   snapToInterval={this.screenWidth}
                   snapToAlignment={"center"}
                   showsHorizontalScrollIndicator={false}
                   ref={this.scrollView}
-                  onMomentumScrollEnd={this.handleScroll}
+                  onScroll={this.isCloseToEnd}
                   onLayout={() => this.scrollToInitialPosition(this.state.day_index, false)}
                 >
                 {this.state.timetable.map((day_events_array) => {

@@ -52,6 +52,8 @@ export const SearchComponent = forwardRef((props, ref) => {
           setValue={(value) => setSelectedValue(value) }
           placeholder = {props.placeholder}
           searchPlaceholder="Search..."
+          listMode={Platform.OS === 'ios' ? "SCROLLVIEW" : "MODAL"}
+          onClose={() => setOpen(false)}
           style={{height: normalize(40)}}
         />
       </View>

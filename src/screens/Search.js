@@ -21,6 +21,7 @@ export default function Search({navigation}) {
   const [activeDropdown, setActiveDropdwon] = useState(null)
   const [status, setStatus] = useState(null)
   const [saveData, setSaveData] = useState(true)
+  const [checked, setChecked] = useState(true)
   const [searchButtonActive, setSearchButtonActive] = useState(false)
   const childRef1 = useRef();
   const childRef2 = useRef();
@@ -83,6 +84,7 @@ export default function Search({navigation}) {
 
   function setToggleCheckBox(value) {
     setSaveData(value)
+    setChecked(!checked)
   }
 
   function checkValidity(...args) {
@@ -198,27 +200,24 @@ export default function Search({navigation}) {
 
               <View style={{flexDirection:"row", marginTop:normalize(20), marginLeft:normalize(5), alignItems: "center"}}>
                 <CheckBox
-                  value={true}
+                  value={checked}
                   onValueChange={null}
                   onCheckColor="#24A0ED"
                   tintColor="#24A0ED"
                   onTintColor="#24A0ED"
                   offAnimationType="bounce"
                   onAnimationType="bounce"
+                  tintColors={{ true: '#24A0ED', false: '#24A0ED' }}
                   onValueChange={(value) => setToggleCheckBox(value)}
                 />
                 <Text style={{marginLeft:normalize(15), fontSize: normalize(12)}}>Remember selections</Text>
               </View>
 
-              <View style={[styles.submitButton, searchButtonActive ? null : {opacity:0.5} ]}>
-                <Button
-                  title="Search"
-                  color= "white"
-                  opacity = "1"
-                  disabled = {searchButtonActive ? false : true}
-                  onPress={() => handleSearch()}
-                />
-              </View>
+              <TouchableOpacity onPress={() => handleSearch()} disabled = {searchButtonActive ? false : true}>
+                <View style={[styles.submitButton, searchButtonActive ? null : {opacity:0.5} ]}>
+                  <Text style={{fontSize:normalize(18), color: "white"}}>Search</Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={{flex: 3}}>
               <SearchHeader/>
@@ -305,6 +304,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#24A0ED",
     borderColor: "#24A0ED",
     borderRadius: 10,
-    height: normalize(40)
+    height: normalize(40),
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
