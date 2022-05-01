@@ -22,7 +22,7 @@ export default function EventCard(props) {
           </Text>
         </View>
         <View>
-          {props.step == "now" ? <PulseIndicator color='#d45920' size={25}/> : null}
+          {props.step == "now" ? <PulseIndicator color='#6bb346' size={25}/> : null}
         </View>
       </View>
 

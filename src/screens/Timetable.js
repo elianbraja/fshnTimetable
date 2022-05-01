@@ -5,7 +5,7 @@ import { ScrollView} from 'react-native-gesture-handler'
 import DaySelector from '../components/DaySelector'
 import SingleDayTimetable from '../components/SingleDayTimetable'
 import DateSettings from '../services/DateSettings'
-import { getStudentTimetable, getPedagogTimetable } from '../services/Api/Api'
+import { getStudentTimetable, getProfessorTimetable } from '../services/Api/Api'
 import { DotIndicator } from 'react-native-indicators';
 
 
@@ -63,7 +63,7 @@ export default class Timetable extends React.Component {
       timetable = await getStudentTimetable(data.academicYear, data.group, data.subject);
     }
     else {
-      timetable = await getPedagogTimetable(data.professor);
+      timetable = await getProfessorTimetable(data.professor);
     }
     if(timetable.error)
       return
