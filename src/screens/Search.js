@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage} from 'react-native';
 import {SearchComponent} from '../components/SearchComponent';
 import CheckBox from '@react-native-community/checkbox';
-import { getStudyFields } from '../services/Api/Api'
-import { getProfessors } from '../services/Api/Api'
+import { getStudyFields, getProfessors, getAcademicYears, getGroups } from '../services/Api/Api'
 import SearchHeader from '../components/SearchHeader'
 import normalize from 'react-native-normalize';
 
@@ -14,9 +13,9 @@ export default function Search({navigation}) {
   const [study_field, setStudyField] = useState(null)
   const [professors, setProfessors] = useState([])
   const [professor, setProfessor] = useState(null)
-  const academicYears = [{label:"1", value:"1"}, {label:"2", value:"2"}, {label:"3", value:"3"}]
+  const [academic_years, setAcademicYears] = useState([])
   const [academicYear, setAcademicYear] = useState(null)
-  const groups = [{label:"A1", value:"A1"}, {label:"A2", value:"A2"}, {label:"B1", value:"B1"}, {label:"B2", value:"B2"}]
+  const [groups, setGroups] = useState([])
   const [group, setGroup] = useState(null)
   const [activeDropdown, setActiveDropdwon] = useState(null)
   const [status, setStatus] = useState(null)
@@ -68,7 +67,25 @@ export default function Search({navigation}) {
       return
     else
       setProfessors(professors.data.professors)
+
   }
+
+  async function callAcademicYears(study_field) {
+    const years = await getAcademicYears(study_field)
+    if(years.error)
+      return
+    else
+      setAcademicYears(years.data.academic_years)
+  }
+
+  async function callGroups(study_field, academic_year) {
+    const groups = await getGroups(study_field, academic_year)
+    if(groups.error)
+      return
+    else
+      setGroups(groups.data.groups)
+  }
+
 
   function closeDropdown() {
     childRef1.current.closeDropdown()
@@ -85,6 +102,18 @@ export default function Search({navigation}) {
   function setToggleCheckBox(value) {
     setSaveData(value)
     setChecked(!checked)
+  }
+
+  function nullifyAcademicYears() {
+    childRef3.current.nullifyValue()
+    setAcademicYear(null)
+    setSearchButtonActive(false)
+  }
+
+  function nullifyGroups() {
+    childRef4.current.nullifyValue()
+    setGroup(null)
+    setSearchButtonActive(false)
   }
 
   function checkValidity(...args) {
@@ -155,7 +184,8 @@ export default function Search({navigation}) {
                   ref={childRef1}
                   active={activeDropdown==1}
                   items={study_fields}
-                  passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group");}}
+                  passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group"); nullifyAcademicYears(); nullifyGroups()}}
+                  getStringValue={(study_field) => callAcademicYears(study_field)}
                   placeholder={"Select field of study"}
                   setActiveDropdwon={(index) => handleActiveDropdown(index)}
                   defaultValue={status == "student" ? study_field : null}
@@ -165,6 +195,7 @@ export default function Search({navigation}) {
               <View style={ status == "professor" ? {zIndex: 1} : {display: "none"}}>
                 <SearchComponent
                   searchable
+                  getStringValue={(value) => null}
                   index={2}
                   ref={childRef2}
                   active={activeDropdown==2}
@@ -179,15 +210,17 @@ export default function Search({navigation}) {
               <View style={status == "professor" ? {display:"none"} : {zIndex: activeDropdown==1 ? 0 : 1}}>
                 <SearchComponent
                   index={3}
+                  getStringValue={(academic_year) => callGroups(study_field, academic_year)}
                   ref={childRef3}
                   active={activeDropdown==3}
-                  items={academicYears}
-                  passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "study_field");}}
+                  items={academic_years}
+                  passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "study_field"); nullifyGroups()}}
                   placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
                   defaultValue={status == "student" ? academicYear : null}
                 />
                 <SearchComponent
                   index={4}
+                  getStringValue={(value) => null}
                   ref={childRef4}
                   active={activeDropdown==4}
                   items={groups}

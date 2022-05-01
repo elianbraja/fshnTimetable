@@ -24,11 +24,17 @@ export const SearchComponent = forwardRef((props, ref) => {
     }
   }, [props.defaultValue]);
 
-  useImperativeHandle(ref, () => ({
-    closeDropdown() {
-      setOpen(false)
-    }
-  }));
+
+  const closeDropdown = () => {
+    setOpen(false)
+  }
+
+  const nullifyValue = () => {
+    setValue(null)
+  }
+
+  useImperativeHandle(ref, () => ({ closeDropdown, nullifyValue }), [ ])
+
 
   function setSelectedValue(value) {
     setValue(value)
@@ -38,6 +44,10 @@ export const SearchComponent = forwardRef((props, ref) => {
   function setDropdownStatus(status) {
     setOpen(status)
     props.setActiveDropdwon(index)
+  }
+
+  function getStringValue(value) {
+    props.getStringValue(value)
   }
 
   return (
@@ -50,6 +60,7 @@ export const SearchComponent = forwardRef((props, ref) => {
           items={items}
           setOpen={(status) => {status==true ? setDropdownStatus(status) : null}}
           setValue={(value) => setSelectedValue(value) }
+          onChangeValue={(value) => getStringValue(value)}
           placeholder = {props.placeholder}
           searchPlaceholder="Search..."
           listMode={Platform.OS === 'ios' ? "SCROLLVIEW" : "MODAL"}
