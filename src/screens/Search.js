@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Button, TouchableWithoutFeedback, TouchableOpacity, AsyncStorage} from 'react-native';
 import {SearchComponent} from '../components/SearchComponent';
 import CheckBox from '@react-native-community/checkbox';
-import { getSubjects } from '../services/Api/Api'
+import { getStudyFields } from '../services/Api/Api'
 import { getProfessors } from '../services/Api/Api'
 import SearchHeader from '../components/SearchHeader'
 import normalize from 'react-native-normalize';
@@ -10,8 +10,8 @@ import normalize from 'react-native-normalize';
 
 export default function Search({navigation}) {
 
-  const [subjects, setSubjects] = useState([])
-  const [subject, setSubject] = useState(null)
+  const [study_fields, setStudyFields] = useState([])
+  const [study_field, setStudyField] = useState(null)
   const [professors, setProfessors] = useState([])
   const [professor, setProfessor] = useState(null)
   const academicYears = [{label:"1", value:"1"}, {label:"2", value:"2"}, {label:"3", value:"3"}]
@@ -37,7 +37,7 @@ export default function Search({navigation}) {
             setProfessor(await AsyncStorage.getItem('professor'))
           }
           else if(status == "student"){
-            setSubject(await AsyncStorage.getItem('subject'))
+            setStudyField(await AsyncStorage.getItem('study_field'))
             setAcademicYear(await AsyncStorage.getItem('academicYear'))
             setGroup(await AsyncStorage.getItem('group'))
           }
@@ -46,7 +46,7 @@ export default function Search({navigation}) {
         else{
           setStatus("student")
         }
-        callSubjects()
+        callStudyFields()
         callProfessors()
     }
     catch(e) {
@@ -54,12 +54,12 @@ export default function Search({navigation}) {
     }
   },[])
 
-  async function callSubjects() {
-    const subjects = await getSubjects()
-    if(subjects.error)
+  async function callStudyFields() {
+    const study_fields = await getStudyFields()
+    if(study_fields.error)
       return
     else
-      setSubjects(subjects.data.subjects)
+      setStudyFields(study_fields.data.study_fields)
   }
 
   async function callProfessors() {
@@ -100,7 +100,7 @@ export default function Search({navigation}) {
   handleSearch = () => {
     navigation.navigate('Timetable', {
       status: status,
-      subject: subject,
+      study_field: study_field,
       professor: professor,
       academicYear: academicYear,
       group: group
@@ -117,7 +117,7 @@ export default function Search({navigation}) {
     try {
       let items = null
       if(status == "student"){
-        items = [['subject', subject], ['academicYear', academicYear], ['group', group], ['status', 'student']]
+        items = [['study_field', study_field], ['academicYear', academicYear], ['group', group], ['status', 'student']]
       }
       else{
         items = [['professor', professor], ['status', 'professor']]
@@ -136,7 +136,7 @@ export default function Search({navigation}) {
             <View style={styles.viewContainer}>
               <Text style={styles.headerLabel}>Welcome</Text>
               <View style={styles.stausSelector}>
-                <TouchableOpacity style={{flex: 1, marginRight:normalize(5)}} onPress={() => {setStatus("student"); callSubjects(); setActiveDropdwon(null); checkValidity("academicYear", "subject", "group");}}>
+                <TouchableOpacity style={{flex: 1, marginRight:normalize(5)}} onPress={() => {setStatus("student"); callStudyFields(); setActiveDropdwon(null); checkValidity("academicYear", "study_field", "group");}}>
                   <View style={status == "student" ? styles.statusCardActive : styles.statusCard}>
                     <Text style={status == "student" ? styles.statusTextActive : styles.statusText}>STUDENT</Text>
                   </View>
@@ -154,11 +154,11 @@ export default function Search({navigation}) {
                   index={1}
                   ref={childRef1}
                   active={activeDropdown==1}
-                  items={subjects}
-                  passSelectedToParent={(subject) => { setActiveDropdwon(null); setSubject(subject); checkValidity("academicYear", "group");}}
-                  placeholder={"Select subject"}
+                  items={study_fields}
+                  passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group");}}
+                  placeholder={"Select study_field"}
                   setActiveDropdwon={(index) => handleActiveDropdown(index)}
-                  defaultValue={status == "student" ? subject : null}
+                  defaultValue={status == "student" ? study_field : null}
                 />
               </View>
 
@@ -182,7 +182,7 @@ export default function Search({navigation}) {
                   ref={childRef3}
                   active={activeDropdown==3}
                   items={academicYears}
-                  passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "subject");}}
+                  passSelectedToParent={(academicYear) => { setActiveDropdwon(null); setAcademicYear(academicYear); checkValidity("group", "study_field");}}
                   placeholder={"Select year of course"} setActiveDropdwon={(index) => handleActiveDropdown(index)}
                   defaultValue={status == "student" ? academicYear : null}
                 />
@@ -191,7 +191,7 @@ export default function Search({navigation}) {
                   ref={childRef4}
                   active={activeDropdown==4}
                   items={groups}
-                  passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("subject", "academicYear");}}
+                  passSelectedToParent={(group) => { setActiveDropdwon(null); setGroup(group); checkValidity("study_field", "academicYear");}}
                   placeholder={"Select group"}
                   setActiveDropdwon={(index) => handleActiveDropdown(index)}
                   defaultValue={status == "student" ? group : null}

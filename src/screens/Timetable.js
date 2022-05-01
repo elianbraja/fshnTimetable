@@ -36,7 +36,7 @@ export default class Timetable extends React.Component {
          status: await AsyncStorage.getItem('status'),
          academicYear: await AsyncStorage.getItem('academicYear'),
          group: await AsyncStorage.getItem('group'),
-         subject: await AsyncStorage.getItem('subject'),
+         study_field: await AsyncStorage.getItem('study_field'),
          professor: await AsyncStorage.getItem('professor')
        }
     }
@@ -60,7 +60,7 @@ export default class Timetable extends React.Component {
   async getTimetable(data) {
     let timetable = []
     if(data.status == "student"){
-      timetable = await getStudentTimetable(data.academicYear, data.group, data.subject);
+      timetable = await getStudentTimetable(data.academicYear, data.group, data.study_field);
     }
     else {
       timetable = await getProfessorTimetable(data.professor);
