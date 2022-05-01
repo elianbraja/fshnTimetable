@@ -156,7 +156,7 @@ export default function Search({navigation}) {
                   active={activeDropdown==1}
                   items={study_fields}
                   passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group");}}
-                  placeholder={"Select study_field"}
+                  placeholder={"Select field of study"}
                   setActiveDropdwon={(index) => handleActiveDropdown(index)}
                   defaultValue={status == "student" ? study_field : null}
                 />
