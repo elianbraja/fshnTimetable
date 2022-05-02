@@ -184,7 +184,7 @@ export default function Search({navigation}) {
                   ref={childRef1}
                   active={activeDropdown==1}
                   items={study_fields}
-                  passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group"); nullifyAcademicYears(); nullifyGroups()}}
+                  passSelectedToParent={(study_field) => { setActiveDropdwon(null); setStudyField(study_field); checkValidity("academicYear", "group"); nullifyAcademicYears(); nullifyGroups(); setGroups([])}}
                   getStringValue={(study_field) => callAcademicYears(study_field)}
                   placeholder={"Select field of study"}
                   setActiveDropdwon={(index) => handleActiveDropdown(index)}
