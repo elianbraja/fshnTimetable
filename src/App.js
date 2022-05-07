@@ -14,7 +14,7 @@ export default function App({navigation}) {
 
   let infoPoint = (
     <View style={{paddingRight: 20}}>
-      <FontAwesome name="info-circle" size={25} color="#eff2ed" onPress={() => Linking.openURL('mailto:elianbraja@gmail.com')}/>
+      <FontAwesome name="comments" size={25} color="#eff2ed" onPress={() => Linking.openURL('mailto:elianbraja@gmail.com?subject=FSHN Timetable feedback')}/>
     </View>
   )
 
