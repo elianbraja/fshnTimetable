@@ -1,24 +1,25 @@
 PODS:
+  - BEMCheckBox (1.4.1)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - EXApplication (4.0.0):
+  - EXApplication (4.0.2):
     - ExpoModulesCore
   - EXConstants (12.1.3):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.3):
+  - EXErrorRecovery (3.0.5):
     - ExpoModulesCore
   - EXFileSystem (13.0.3):
     - ExpoModulesCore
-  - EXFont (10.0.3):
+  - EXFont (10.0.5):
     - ExpoModulesCore
-  - EXJSONUtils (0.2.0)
-  - EXKeepAwake (10.0.0):
+  - EXJSONUtils (0.2.1)
+  - EXKeepAwake (10.0.2):
     - ExpoModulesCore
-  - EXManifests (0.2.2):
+  - EXManifests (0.2.4):
     - EXJSONUtils
-  - Expo (43.0.3):
+  - Expo (43.0.5):
     - ExpoModulesCore
-  - ExpoModulesCore (0.4.8):
+  - ExpoModulesCore (0.4.10):
     - React-Core
   - EXSplashScreen (0.13.5):
     - ExpoModulesCore
@@ -233,7 +234,7 @@ PODS:
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
   - React-jsinspector (0.64.3)
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
   - React-perflogger (0.64.3)
   - React-RCTActionSheet (0.64.3):
@@ -299,10 +300,11 @@ PODS:
     - React-cxxreact (= 0.64.3)
     - React-jsi (= 0.64.3)
     - React-perflogger (= 0.64.3)
-  - RNCCheckbox (0.5.9):
+  - RNCCheckbox (0.5.17):
+    - BEMCheckBox (~> 1.4)
     - React-Core
-  - RNFS (2.18.0):
-    - React
+  - RNFS (2.20.0):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.2.4):
@@ -334,10 +336,10 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.8.0):
+  - RNScreens (3.30.1):
     - React-Core
     - React-RCTImage
-  - RNVectorIcons (9.0.0):
+  - RNVectorIcons (9.2.0):
     - React-Core
   - Yoga (1.14.0)
 
@@ -396,6 +398,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - BEMCheckBox
     - boost-for-react-native
 
 EXTERNAL SOURCES:
@@ -499,24 +502,25 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXApplication: 4e001850816f38eb4812cb02fe059974daeafe4d
-  EXConstants: 66361ff23b5ea7eae3684ffad0f15955c23b5134
-  EXErrorRecovery: 0e088d138e44f0e4a24655040e7f7c34ede8cc06
-  EXFileSystem: 624eef3e3a853f19cc0c26eaffab1519001d8c35
-  EXFont: 6e8f77d9741f5cd83f710adbf26ebb57a036283b
-  EXJSONUtils: bafb27ed20417c018d942f334d969102e67be7e5
-  EXKeepAwake: ca4071fb63b89a70b13d33f6147cf9b5433c122a
-  EXManifests: 15831e369de4e989f9cfe8c3321303f26745e41d
-  Expo: a3a1b909b62e388a0fd0c9bedb48b16e294b4050
-  ExpoModulesCore: c092c00c13403aa2acbf79973a00d6606732eb68
-  EXSplashScreen: 62f71e20d00cd42cf8cbdc808b848520ddebba01
-  EXStructuredHeaders: 7d4a100b8321c6db341e91e730949558d4a48818
-  EXUpdates: c6dcdb9a33cfb7d81cbe288e1ac7484fcda663d9
-  EXUpdatesInterface: 2413d24feea140d6b30f6c73ec7f7e0281d3594a
+  EXApplication: 54fe5bd6268d697771645e8f1aef8b806a65247a
+  EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
+  EXErrorRecovery: b0d7582714a2cc896e94a2308a356f94dbf14ef7
+  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
+  EXFont: 2597c10ac85a69d348d44d7873eccf5a7576ef5e
+  EXJSONUtils: 5ee0d5cf76da70ad86f0be1a41cc70f47d69e06f
+  EXKeepAwake: bf48d7f740a5cd2befed6cf9a49911d385c6c47d
+  EXManifests: d3464cd2278f4a19cd80c1aa673231570b534c11
+  Expo: d9588796cd19999da4d440d87bf7eb7ae4dbd608
+  ExpoModulesCore: c9438f6add0fb7b04b7c64eb97a833d2752a7834
+  EXSplashScreen: 57f329dbf25c5c12800feed79068a056453dc772
+  EXStructuredHeaders: 873e7f329c2f6279c1b1e0229df59c9861560b53
+  EXUpdates: 061b67c33f0e7f8fd335bbb48697c4a4fc8a5157
+  EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 0ad79d170b2ee1cd40279ebd429a442de03f43de
+  FBReactNativeSpec: 5aacfb9b68be11e90957e00557643aee3f26cad6
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
@@ -529,7 +533,7 @@ SPEC CHECKSUMS:
   React-jsi: a8b09c29521c798f1783348b37b511ba7b3dbeb3
   React-jsiexecutor: df6abc9fafbecb8e5b7a5fbc5e6d4bd017d594d5
   React-jsinspector: 34e23860273a23695342f58eed3ffd3ba10c31e0
-  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
   React-perflogger: cc76a4254d19640f1d8ad1c66fdee800414b805c
   React-RCTActionSheet: 7448f049318d8d7e8a9a1ebb742ada721757eea8
   React-RCTAnimation: fb9b3fa1a4a9f5e6ab01b3368693ce69860ba76a
@@ -542,14 +546,14 @@ SPEC CHECKSUMS:
   React-RCTVibration: c7f845861e79eae13dc1e8217a3cf47a3945b504
   React-runtimeexecutor: 493d9abb8b23c3f84e19ae221eeba92cadcb70dc
   ReactCommon: 8fea6422328e2fc093e25c9fac67adbcf0f04fb4
-  RNCCheckbox: 7e2cd6ea8e200210c36fe0898bbe200826bdaf56
-  RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
+  RNCCheckbox: a3ca9978cb0846b981d28da4e9914bd437403d77
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
-  RNScreens: 6e1ea5787989f92b0671049b808aef64fa1ef98c
-  RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  RNScreens: 848541d154d2a184131b34e468b10aa33008f357
+  RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   Yoga: e6ecf3fa25af9d4c87e94ad7d5d292eedef49749
 
-PODFILE CHECKSUM: 4e859cec4410dc0f90c9d67bec39dc4a5e50956e
+PODFILE CHECKSUM: c051e6855c67c9f6dcf5609dc0e73555db3d7571
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.15.2
